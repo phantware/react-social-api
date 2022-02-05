@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const dotenv = require('dotenv')
-const UserRoute = require('./routes/users')
+const userRoute = require('./routes/users')
+const authRoute = require('./routes/auth')
 
 dotenv.config()
 
@@ -20,12 +21,11 @@ app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
 
+app.use('/api/users', userRoute)
+app.use('/api/auth', authRoute)
+
 app.get('/', (req, res) => {
   return res.status(200).json({ msg: 'Welcome to homepage' })
-})
-
-app.get('/users', (req, res) => {
-  return res.status(200).json({ msg: 'Welcome to user page' })
 })
 
 app.listen(process.env.PORT || 5000, () => {
