@@ -3,8 +3,17 @@ const app = express()
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const helmet = require('helmet')
-const dovent = require('dotenv').config()
+const dotenv = require('dotenv')
 
-const PORT = 8080
+dotenv.config()
 
-app.listen(PORT, () => console.log(`Backend Server running on port ${PORT}`))
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log('DB Connection Successfull!'))
+  .catch((err) => {
+    console.log(err)
+  })
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log('Backend server is running!')
+})
