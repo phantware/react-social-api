@@ -29,7 +29,23 @@ router.put('/:id', async (req, res) => {
     return res.status(403).json({ msg: 'You can update only your account!' })
   }
 })
+
 //Delete User
+
+router.delete('/:id', (req, res) => {
+  if (req.body.userId === req.params.id || req.body.isAdmin) {
+    try {
+      const user = User.findByIdAndDelete(req.params.id)
+      return res
+        .status(200)
+        .json({ msg: 'Account has been deleted successfully' })
+    } catch (error) {
+      return res.status(500).json(error)
+    }
+  } else {
+    return res.status(403).json({ msg: 'You can Delete only your account!' })
+  }
+})
 //Get a User
 //Follow a User
 //Unfollow a User
