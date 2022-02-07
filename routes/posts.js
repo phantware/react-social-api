@@ -28,7 +28,24 @@ router.put('/:id', async (req, res) => {
     return res.status(500).json(error)
   }
 })
+
 //delete a post
+router.delete('/:id', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+    if (post.userId === req.body.userId) {
+      await post.deleteOne()
+      return res
+        .status(200)
+        .json({ msg: 'The post has been deleted successfully' })
+    } else {
+      res.status(400).json({ msg: 'You can delete only your post' })
+    }
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+})
+
 //like a post
 //get a post
 // get timeline posts
