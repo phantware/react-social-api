@@ -7,6 +7,7 @@ const dotenv = require('dotenv')
 const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/posts')
+const multer = require('multer')
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ mongoose
 app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
+const upload = multer()
 
 app.use('/api/users', userRoute)
 app.use('/api/auth', authRoute)
