@@ -8,6 +8,7 @@ const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/posts')
 const multer = require('multer')
+const path = require('path')
 
 dotenv.config()
 
@@ -17,6 +18,8 @@ mongoose
   .catch((err) => {
     console.log(err)
   })
+
+app.use('/images', express.static(path.join(__dirname, 'public/images')))
 
 //Middleware
 app.use(express.json())
