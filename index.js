@@ -19,7 +19,7 @@ mongoose
     console.log(err)
   })
 
-app.use('/images', express.static(path.join(__dirname, 'public/images')))
+app.use('images', express.static(path.join(__dirname, 'public/images')))
 
 //Middleware
 app.use(express.json())
@@ -32,17 +32,16 @@ const storage = multer.diskStorage({
     cb(null, 'public/images')
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname)
+    cb(null, req.body.name)
   },
 })
 
-const upload = multer({ storage })
-
-app.post('/api/upload', upload.single('file'), (req, res) => {
+const upload = multer({ storage: storage })
+app.post('api/upload', upload.single('file'), (req, res) => {
   try {
-    return res.status(200).json('File uploaded successfully')
+    return res.status(200).json('File uploded successfully')
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 })
 
